@@ -1,0 +1,19 @@
+-- configuration
+set theDefaultNotebook to "Salesforce"
+set theTemplateNotebook to "~templates"
+set theTemplateTitle to "Meeting"
+
+-- get the title for the meeting
+set theTitle to text returned of (display dialog "Meeting Name:" default answer "") & " -- Meeting"
+
+-- create the note
+tell application "Evernote"
+	set newNote to create note title theTitle with html (HTML content of (item 1 of (find notes "notebook:\"" & theTemplateNotebook & "\" inTitle:\"" & theTemplateTitle & "\""))) notebook theDefaultNotebook tags "meeting"
+	open note window with newNote
+end tell
+
+-- bring up the new note window
+tell application "System Events" to set frontmost of process "Evernote" to true
+
+-- move cursor to start typing note
+tell application "System Events" to keystroke (key code 124)
